@@ -1,6 +1,8 @@
 # Portfólio
 
-Olá, sou o Douglas, atualmente sou graduando do curso Sistemas e Mídias Digitais da Universidade Federal do Ceará, 3° semestre. Desde 2021 que estudo desenvolvimento de sistemas web. Minhas habilidades com Javascript, PHP e Banco de dados são de nível intermediário. Recentemente, comecei a sentir a necessidade de usar ferramentas que aumentassem minha produtividade, visto que varias etapas no desenvolvimento de um sistema são muito repetitivas, por conta disso acerca de 3 semanas estou estudando Bootstrap, Angular JS e Express JS com o intuito de aplicá-los em meus próximos projetos. 
+Olá, sou o Douglas, atualmente sou graduando do curso Sistemas e Mídias Digitais da Universidade Federal do Ceará, 3° semestre. 
+
+Minha jornada na programação começou no inicio de 2021, no qual escolhi o desenvolvimento de sistemas web como foco do meus estudos. No decorrer desses anos notei um grande avanço em minhas habilidades como desenvolvedor, hoje as considero a nível intermediário. As tecnologias nas quais desenvolvi essas habilidades são Javascript, PHP e Banco de dados. Recentemente, comecei a sentir a necessidade de usar ferramentas que aumentassem minha produtividade, visto que varias etapas no desenvolvimento de um sistema são muito repetitivas, por conta disso acerca de 3 semanas estou estudando Bootstrap, Angular JS e Express JS com o intuito de aplicá-los em meus próximos projetos. 
 
 ## O Projeto: Achaí (em desenvolvimento)
  
