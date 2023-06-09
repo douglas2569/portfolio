@@ -1,10 +1,12 @@
 # Portfólio
 
+Olá, sou o Douglas, atualmente sou graduando do curso Sistemas e Mídias digitais da Universidade Federal do Ceará, 3° Semestre. Desde 2021 que estudo desenvolvimento de sistemas web. Minhas habilidades com Javascript, PHP e Banco de dados são de nível intermediário. Recentemente, comecei a sentir a necessidade de usar ferramentas que aumentassem minha produtividade, visto que varias etapas no desenvolvimento de um sistema são muito repetitivas, por conta disso acerca de 3 semanas estou estudando Bootstrap, Angular JS e Express JS com o intuito de aplicá-los em meus próximos projetos. 
+
 ## O Projeto: Achaí (em desenvolvimento)
  
 Este projeto tem por objetivo digitalizar o serviço de Achados e perdidos do Bloco UFC Virtual, trazendo mais praticidade tanto para o utilizador final quanto para a secretaria do bloco que administra o serviço.
 
-Nesse projeto estão sendo usado as seguinte tecnologias no:
+Nesse projeto estão sendo usadas as seguintes tecnologias: 
   + Front-end:
     - JavaScript (Orientado a Objetos)
     - HTML 5
