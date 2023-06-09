@@ -2,8 +2,19 @@
 
 ## O Projeto: Achaí
  
-Este projeto tem por objetivo digitalizar o serviço de Achados e perdidos do Bloco UFC Virtual, trazendo mais praticidade tanto para o utilizador final quanto para a secretaria do bloco que administra o serviço  
-  
+Este projeto tem por objetivo digitalizar o serviço de Achados e perdidos do Bloco UFC Virtual, trazendo mais praticidade tanto para o utilizador final quanto para a secretaria do bloco que administra o serviço.
+
+Nesse projeto estão sendo usado as seguinte tecnologias no:
+  + Front-End:
+    - JavaScript (Orientado a Objetos)
+    - HTML 5
+    - CSS3
+  + Banck-End (API REST):
+    - PHP (Orientado a Objetos)
+    - MySQL
+    
+Arquitetura de software que está sendo utilizada é a MVC (tando no back-end quanto no front-end).
+
 ## Instalação e Manutenção    
 
 Para rodar o projeto é necessário ter em sua maquina um servidor web (o php instalado nele) e o banco de dados MySQL, tudo isso pode ser usado através do software [XAMPP] (https://www.apachefriends.org/), bastando instalá-lo e configurá-lo em sua maquina. Alem disso, se faz necessário a instalação do software [Composer] (https://getcomposer.org) para a instalação de dependências no projeto. 
