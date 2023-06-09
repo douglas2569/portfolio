@@ -65,7 +65,7 @@ A pasta `/src` é onde se encontra o front-end
 ## Programador
 + ### Carlos Douglas
 
-## UX/UI Designer
+### UX/UI Designer
 + Angelo Vinícius 
 + Arthur Oliveira
 + Ednara Miranda
