@@ -13,7 +13,7 @@ Nesse projeto estão sendo usado as seguinte tecnologias no:
     - PHP (Orientado a Objetos)
     - MySQL
     
-Arquitetura de software que está sendo utilizada é a MVC (tando no back-end quanto no front-end).
+Arquitetura de software que está sendo utilizada é a MVC (back-end quanto e front-end).
 
 ## Instalação e Manutenção    
 
