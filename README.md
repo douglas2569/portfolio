@@ -15,6 +15,9 @@ Nesse projeto estão sendo usado as seguinte tecnologias no:
     
 Arquitetura de software que está sendo utilizada é a MVC (back-end quanto e front-end).
 
+### Apresentação do aplicativo web Achaí - SMD UFC
+    Link: https://youtu.be/WKKR_sCsLDw
+
 ## Instalação e Manutenção    
 
 Para rodar o projeto é necessário ter em sua maquina um servidor web (o php instalado nele) e o banco de dados MySQL, tudo isso pode ser usado através do software [XAMPP] (https://www.apachefriends.org/), bastando instalá-lo e configurá-lo em sua maquina. Alem disso, se faz necessário a instalação do software [Composer] (https://getcomposer.org) para a instalação de dependências no projeto. 
