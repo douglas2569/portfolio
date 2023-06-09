@@ -44,4 +44,5 @@ A pasta `/db` é onde se encontra o arquivo sql com a estrutura do banco
 
 A pasta `/src` é onde se encontra o front-end
 
-## Desenvolvedores
+## Programador
+Carlos Douglas Silva Nascimento
