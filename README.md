@@ -5,11 +5,11 @@
 Este projeto tem por objetivo digitalizar o serviço de Achados e perdidos do Bloco UFC Virtual, trazendo mais praticidade tanto para o utilizador final quanto para a secretaria do bloco que administra o serviço.
 
 Nesse projeto estão sendo usado as seguinte tecnologias no:
-  + Front-End:
+  + Front-end:
     - JavaScript (Orientado a Objetos)
     - HTML 5
     - CSS3
-  + Banck-End (API REST):
+  + Banck-end (API REST):
     - PHP (Orientado a Objetos)
     - MySQL
     
