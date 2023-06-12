@@ -46,7 +46,7 @@ A pasta `/db` é onde se encontra o arquivo sql com a estrutura do banco.
 
 A pasta `/src` é onde se encontra o front-end
 
-### Esse projeto está sendo desenvolvido por alunos da UFC do curso SMD. Participantes:
+## Esse projeto está sendo desenvolvido por alunos da UFC do curso SMD. Participantes:
 
 ### Programador (back-end/front-end)
 - Carlos Douglas
