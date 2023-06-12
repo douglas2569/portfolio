@@ -5,7 +5,7 @@
  
 Este projeto tem por objetivo digitalizar o serviço de Achados e perdidos do Bloco UFC Virtual,trazendo mais praticidade tanto para o utilizador final quanto para a secretaria do bloco que administra o serviço.  
 
-### Video apresentando as funcionalidades concluídas 
+## Video apresentando as funcionalidades concluídas 
 ```  
 https://youtu.be/tWirAIwA-FU
 ```  
@@ -38,19 +38,15 @@ A pasta `/api` é onde se encontra o back-end do sistema.
 
 A pasta `/assets` é onde se encontra as imagens, folhas de estilos e scripts que serão usado em todo sistema.
 
-### `/assets`
-
-A pasta `/assets` é onde se encontra as imagens, folhas de estilos e scripts que serão usado em todo sistema.
-
 ### `/db`
 
-A pasta `/db` é onde se encontra o arquivo sql com a estrutura do banco
+A pasta `/db` é onde se encontra o arquivo sql com a estrutura do banco.
 
 ### `/src`
 
 A pasta `/src` é onde se encontra o front-end
 
-## Esse projeto está sendo desenvolvido por alunos da UFC do curso SMD. Participantes:
+### Esse projeto está sendo desenvolvido por alunos da UFC do curso SMD. Participantes:
 
 ### Programador (back-end/front-end)
 - Carlos Douglas
