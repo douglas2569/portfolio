@@ -47,12 +47,12 @@ A pasta `/src` é onde se encontra o front-end
 
 ## Esse projeto está sendo desenvolvido por alunos da UFC do curso SMD, a nossa equipe é a ANT-404. Participantes:
 
-### Programador
-- CARLOS DOUGLAS
+### Programador (back-end/front-end)
+- Carlos Douglas
 
 ### Designers (UI/UX)
-- ANGELO VINICIUS 
-- ARTHUR OLIVEIRA
-- EDNARA MIRANDA
-- GUILHERME FERREIRA
-- HEBERT KLEI
+- Angelo Vinicius 
+- Arthur Oliveira
+- Ednara Miranda
+- Guilherme Ferreira
+- Hebert Klei
