@@ -1,8 +1,9 @@
-# Portfólio
 
-## O Projeto: Achaí
+# Achaí
+  
+## O Projeto 
  
-Este projeto tem por objetivo digitalizar o serviço de Achados e perdidos do Bloco UFC Virtual, trazendo mais praticidade tanto para o utilizador final quanto para a secretaria do bloco que administra o serviço  
+Este projeto tem por objetivo digitalizar o serviço de Achados e perdidos do Bloco UFC Virtual,trazendo mais praticidade tanto para o utilizador final quanto para a secretaria do bloco que administra o serviço  
   
 ## Instalação e Manutenção    
 
@@ -44,5 +45,13 @@ A pasta `/db` é onde se encontra o arquivo sql com a estrutura do banco
 
 A pasta `/src` é onde se encontra o front-end
 
-## Programador
-Carlos Douglas Silva Nascimento
+## Desenvolvedores
+
+Esse projeto está sendo desenvolvido por alunos da UFC do curso SMD, a nossa equipe é a ANT-404. Participantes:
+
+- ANGELO VINICIUS 
+- ARTHUR OLIVEIRA
+- CARLOS DOUGLAS
+- EDNARA MIRANDA
+- GUILHERME FERREIRA
+- HEBERT KLEI
