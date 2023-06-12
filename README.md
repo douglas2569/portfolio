@@ -45,13 +45,14 @@ A pasta `/db` é onde se encontra o arquivo sql com a estrutura do banco
 
 A pasta `/src` é onde se encontra o front-end
 
-## Desenvolvedores
+## Esse projeto está sendo desenvolvido por alunos da UFC do curso SMD, a nossa equipe é a ANT-404. Participantes:
 
-Esse projeto está sendo desenvolvido por alunos da UFC do curso SMD, a nossa equipe é a ANT-404. Participantes:
+### Programador
+- CARLOS DOUGLAS
 
+### Designers (UI/UX)
 - ANGELO VINICIUS 
 - ARTHUR OLIVEIRA
-- CARLOS DOUGLAS
 - EDNARA MIRANDA
 - GUILHERME FERREIRA
 - HEBERT KLEI
