@@ -20,7 +20,7 @@ Nesse projeto estão sendo usadas as seguintes tecnologias:
 Arquitetura de software que está sendo utilizada é a MVC (back-end quanto e front-end).
 
 ### Apresentação do aplicativo web Achaí - SMD UFC
-    https://youtu.be/WKKR_sCsLDw
+    https://youtu.be/tWirAIwA-FU
 
 ## Instalação e Manutenção    
 
