@@ -24,3 +24,7 @@ div#img-register-modal{
 form#form{
   height: 60vh;  
 }
+
+video{
+  display: none;
+}
