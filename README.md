@@ -1,7 +1,9 @@
 # Portfólio
 
-### linkedin: https://www.linkedin.com/in/carlos-douglas-79746927a/
-
+### linkedin:
+```  
+https://www.linkedin.com/in/carlos-douglas-79746927a/
+```  
 ## Sobre
 Olá, sou o Douglas, estou cursando Sistemas e Mídias Digitais na Universidade Federal do Ceará, 3° semestre, mas desde 2021 que estudo Desenvolvimento de Sistemas WEB. Por conta disso, consegui desenvolver uma lógica de programação consistente, o que me deixou confortável para, recentemente, começar a estudar alguns frameworks (Bootstrap, Angular JS e Express JS). Ademais, meu nível de inglês técnico é básico para intermediário (leitura), o que me ajudar quando preciso consultar documentações, sites ou comunidades de programação, seja para estudo ou resolução de Bugs. 
 
