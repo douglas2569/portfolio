@@ -1,5 +1,6 @@
 import ModelCategories from '../../../../models/categories/index.js';
 import ModelThings from '../../../../models/things/index.js';
+import ModelEmail from '../../../../models/email/index.js';
 import Controller from '../../../../core/controller/index.js';
 import config from '../../../../../config.js';
 
@@ -9,6 +10,7 @@ class ShowThing extends Controller{
         super()      ;
         this.modelCategories = new  ModelCategories();
         this.modelThings = new  ModelThings();
+        this.modelEmail = new  ModelEmail();
         this.identifier = this.retrieveURLId();                     
 
     }   
@@ -75,7 +77,7 @@ class ShowThing extends Controller{
             }
            
             document.querySelector('#send-email-modal').style.display = 'none'; 
-            let response = await this.modelThings.sendEmail(formData);
+            let response = await this.modelEmail.sendEmail(formData);
 
            if(!response.erro){
                this.modelThings.reserve('', formData, 'Reservado'); 
