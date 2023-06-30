@@ -1,6 +1,10 @@
-import ModelAdmins from '../../../models/login/index.js';
+import ModelAdmins from '../../../models/admin/index.js';
 import Controller from '../../../core/controller/index.js';
 import config from '../../../../config.js';
+
+import HelperSandwichMenu from '../../helpers/sandwichmenu/index.js';
+
+import LayoutHeaderContent from '../../components/headercontent/index.js';
 
 class Profile extends Controller{    
 
@@ -11,49 +15,93 @@ class Profile extends Controller{
         this.prevPage = `${config.urlBase}/src/views/admin/panel/`;   
     }
 
-    async getUserAdmin(){  
-        
-        const userAdmin= await this.modelAdmins.get(this.identifier); 
-        
-        if(!userAdmin.erro){            
-            document.querySelector("#user").value = userAdmin.result.user;            
-            document.querySelector("#email").value = userAdmin.result.email;
-            
-        }else{
-            alert(userAdmin.erro);
-        }        
-    }
-
     async update(){
+        let id = this.identifier;
+        // let user = document.querySelector("#user").value;
+        let user = document.querySelector("#email").value;
+        let email = document.querySelector("#email").value;
+        let password = document.querySelector("#password").value;
+        
+        if(email === '')  {   
+            alert('campo email vazio');             
+            return;
+        }else{
+            if(document.querySelector("#email").getAttribute('disabled') === null
+                || document.querySelector("#password").getAttribute('disabled') === null
+            ){
+                if (window.confirm("Deseja salvar as alterações?")) {
+                    let formData = new FormData();
+                    formData.set('id', id);
+                    formData.set('user', user);
+                    formData.set('email', email);
+                    formData.set('password', password);
+                    await this.modelAdmins.update(this.prevPage, formData); 
+                } 
+            }
+                 
 
-        document.querySelector("#update-button").addEventListener("click",(e)=>{  
-            e.preventDefault();
-
-            let id = this.identifier;
-            let user = document.querySelector("#user").value;
-            let password = document.querySelector("#password").value;
-            let email = document.querySelector("#email").value;
-                         
-            this.modelAdmins.update(this.prevPage, {id, user, password, email }); 
+        }   
+        
+            
+    }    
+    
+    enableFileds(){
+        document.querySelector(".span-email").addEventListener('click',function(e){  
+                    
+            document.querySelector("#email").removeAttribute('disabled');
         });
 
-
+        document.querySelector(".span-password").addEventListener('click', function(e){
+            
+            document.querySelector("#password").removeAttribute('disabled');
+        });
     }
 
-    enableButton(...fields){
+    createHeaderContent(){
+        const contentHeader = new LayoutHeaderContent();
+        contentHeader.create(document.querySelector('header .container'), `${config.urlBase}/src/views/admin/panel/`, 
+        false, true, true, false);
+    } 
 
-        for (let i = 0; i < fields.length; i++) {
-           
-            document.querySelector(`#${fields[i]}`).addEventListener("focus",()=>{
-                document.querySelector("#update-button").removeAttribute("disabled");  
-            });  
-            
-        }       
+    exit(){
+        document.querySelector("#exit-button").addEventListener("click", async(e)=>{
+            this.update();
 
+            document.querySelector("body .background-modal").style.display = "none"; 
+            localStorage.removeItem("hash");
+            alert("Deslogado com sucesso");
+           window.location.href = `${config.urlBase}/src/views/admin/login/`;
+        });
+        
+    }
+
+    getAdminEmail(){
+        
+        let formData = new FormData();
+        formData.append('hash', localStorage.getItem('hash')); 
+
+        return this.modelAdmins.getByHash(formData);
+    }
+
+    setEmail(){
+        (this.getAdminEmail()).then((response)=>{
+            document.querySelector('.label-email').textContent =  response.result.email;            
+        });
+        
     }
 }
 
 const profile = new Profile();
-profile.getUserAdmin();
-profile.update();
-profile.enableButton("user", "password", "email");
+profile.createHeaderContent();
+profile.enableFileds();
+profile.setEmail();
+profile.exit();
+
+HelperSandwichMenu.createSandwichMenu();
+HelperSandwichMenu.goToProfile();
+HelperSandwichMenu.goToDiscardeThings();
+HelperSandwichMenu.goToCategoryManager();
+HelperSandwichMenu.openSandwichMenu();
+HelperSandwichMenu.closeSandwichMenu();
+// HelperSandwichMenu.goToReturnedThings();
+// HelperSandwichMenu.exit();

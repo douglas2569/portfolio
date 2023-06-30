@@ -1,7 +1,12 @@
-import config from './config.js';
 import ModelCategories from './src/models/categories/index.js';
 import ModelThings from './src/models/things/index.js';
-import LayoutThing from './src/views/components/layoutthing/index.js';
+import LayoutThing from './src/views/components/thing/index.js';
+import LayoutHeaderContent from './src/views/components/headercontent/index.js';
+import LayoutModalSearch from './src/views/components/modalsearch/index.js';
+
+import HelperSearch from './src/views/helpers/search/index.js';
+
+import config from './config.js';
 
 class Home {
     constructor(){
@@ -18,19 +23,23 @@ class Home {
             for (let i = 0; i < allCategories.result.length; ++i) {  
                 let li = document.createElement("li"); 
                 let a = document.createElement("a");                
-                let img = document.createElement("img");                
+                let spanIcon = document.createElement("span");                
                 let span = document.createElement("span");                    
                 
-                if(allCategories.result[i].image_address !== null){
-                    img.src = `${config.urlBase}/${allCategories.result[i].image_address}`;
+                if(allCategories.result[i].icon_name !== null){
+                    spanIcon.setAttribute('class','material-symbols-rounded');                    
+                    spanIcon.style.backgroundImage = `url(${config.urlBase}/assets/imgs/icons/${allCategories.result[i].icon_name})`;
+                    spanIcon.style.backgroundRepeat = `no-repeat`;
+                    spanIcon.style.backgroundPosition = `center`;                    
+                    a.setAttribute("data-id",allCategories.result[i].id);                                
+                    span.textContent = allCategories.result[i].name;
+                    a.appendChild(spanIcon); 
+                    li.appendChild(a);
+                    li.appendChild(span); 
+                    ul.appendChild(li);
                 }
 
-                a.setAttribute("data-id",allCategories.result[i].id);                                
-                span.textContent = allCategories.result[i].name;
-                a.appendChild(img); 
-                a.appendChild(span); 
-                li.appendChild(a);
-                ul.appendChild(li);                 
+                                 
             }           
             
        }    
@@ -48,10 +57,20 @@ class Home {
             categoriesLinks[i].addEventListener('click',async(e)=>{                
                 let categoriesId = e.target.parentNode.getAttribute("data-id");                
                 for (let j = 0; j < categoriesLinks.length; j++) {
-                    categoriesLinks[j].parentNode.classList.remove('active');                  
+                    //categoriesLinks[j].parentNode.classList.remove('active');                  
+                    categoriesLinks[j].parentNode.removeAttribute('class');                 
                 }
-
-                e.target.parentNode.parentNode.setAttribute('class','active');
+                
+                //console.log(e.target.parentNode.parentNode.classList.contains('active'));
+                //console.log(e.target.parentNode.parentNode.hasAttribute("class"));
+                
+                //console.log(e.target.parentNode.parentNode);
+                if(e.target.parentNode.parentNode.classList.contains('active')){
+                    //e.target.parentNode.parentNode.classList.remove('active');
+                    e.target.parentNode.parentNode.removeAttribute('class');   
+                }else{
+                    e.target.parentNode.parentNode.setAttribute('class','active');
+                }
 
                 let lostThingsFilters = filters.item(0).getAttribute('status');                                
                 let allThings = {};
@@ -142,55 +161,23 @@ class Home {
 
     }    
   
-
-    searchItem(){       
-        let searchItem = document.querySelector('#search-item');
-
-        if(searchItem == null){
-            return;
-        }
-
-        searchItem.addEventListener('keyup',()=>{
-            let input = document.querySelector('#search-item').value
-            input=input.toLowerCase();
-            let x = document.querySelectorAll('.things-list a');
-            
-            
-            for (let i = 0; i < x.length; i++) { 
-                 if (!x[i].outerText.toLowerCase().includes(input)) {
-                    x[i].style.display="none";
-                }
-                else {
-                    x[i].style.display="block";                 
-                }
-            }
-            
-        });
+    createHeaderContent(){
+        const contentHeader = new LayoutHeaderContent();
+        contentHeader.create(document.querySelector('header .container'));
     }
 
-    openSearchModal(){
-        document.querySelector('#search-button').addEventListener('click',()=>{
-            document.querySelector('.background-modal').style.display = 'block';
-            document.querySelector('#search-item').focus();
-        });
-     }
-
-    closeSearchModal(){
-        document.querySelector('#search-item').addEventListener('blur',(event)=>{           
-           document.querySelector('#search-item').value = '';
-           document.querySelector('.background-modal').style.display = 'none';
-            
-        });        
-    }
     
 
 }
 
 const home = new Home();
 await home.categoriesList();
+home.createHeaderContent();
 home.handleThingsByBategories();
 await home.thingsList();
 home.filterThings();
-home.searchItem();
-home.openSearchModal();
-home.closeSearchModal();
+
+HelperSearch.createModalSearch();
+HelperSearch.searchItem();
+HelperSearch.openSearchModal();
+HelperSearch.closeSearchModal();

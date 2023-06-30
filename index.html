@@ -9,55 +9,37 @@
 </head>
 <body>
     <div class="background-modal">        
-        <div class="container">
-            <div id="search-modal">                
-                <span>
-                    <div class="search-bar-modal">                        
-                        <input type="text" id='search-item' placeholder="Ex: garrafa amarela"/>
-                        <img id="search-icon" src="./assets/imgs/lupa.png"  alt="pesquisa é realizada automaticamente ao digitar">  
-                    </div>
-                </span><br> 
-            </div>
-        </div>
-        
+        <div class="container"></div>         
     </div>
-   <header>        
-        <div class="container">            
-            <div class="logo">              
-                <a href=""><img src="./assets/imgs/logo.png"  alt="Achaí"/>  </a></br><br>               
-            </div>            
-            <br>
-            <div class="search-bar">              
-                <img id="search-button" src="./assets/imgs/lupa.png" alt="Botão pesquisar ">            
-               
-           </div>
-        
-        </div>
+
+    <header>        
+        <div class="container"> </div>
     </header>
 
     <main>  
         <div class="container">            
-            <div class="container-header">
-                <span>Mais recentes</span>
-                    
-                <div class="filter-things">           
-                    <span status="1">Perdidos</span>           
-                    <span status="0">Reservados</span>                   
-                </div>            
+            <div class="container-header">  
+                <span>Minhas categorias</span>             
+                <div class="categories-panel">
+                    <ul id = "categories-list"></ul>
+                </div> 
+                <div class="filter-struct">
+                    <span>Mais recentes</span>                    
+                    <div class="filter-things">           
+                        <span status="1">Perdidos</span>           
+                        <span status="0">Reservados</span>                   
+                    </div>  
+                </div>
             </div>
+                 
 
             <div class="things-list"></div>
                
         </div>
 
-    </main>
-           
-    <br>
+    </main>    
     <footer>
-        <div class="container">
-            <div class="categories-panel">
-                <ul id = "categories-list"></ul>
-            </div> 
+        <div class="container">            
             <!-- <span> Copyright - Todos os direitos reservados <br> Desenvolvido por: <a href="">ANT-404</a></span> -->
         </div>
     </footer>
