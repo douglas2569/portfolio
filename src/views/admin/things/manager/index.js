@@ -2,12 +2,14 @@ import ModelThings from '../../../../models/things/index.js';
 import ModelCategories from '../../../../models/categories/index.js';
 import Controller from '../../../../core/controller/index.js';
 import config from '../../../../../config.js';
-import LayoutThing from '../../../components/thing/index.js';
 
+import LayoutThing from '../../../components/thing/index.js';
 import LayoutHeaderContent from '../../../components/headercontent/index.js';
 import LayoutModalSearch from '../../../components/modalsearch/index.js';
 import LayoutSandwichMenu from '../../../components/sandwichmenu/index.js';
 import LayoutCateogoriesList from '../../../components/categories/index.js';
+
+import HelperCategories from '../../../helpers/categories/index.js';
 
 class ThingsManager extends Controller{
 
@@ -46,7 +48,7 @@ class ThingsManager extends Controller{
         });
         
     }
-    
+    /*
     handleChangeThingsByBategories(){
         if(document.querySelectorAll('#categories-list') === null) return;
 
@@ -75,6 +77,14 @@ class ThingsManager extends Controller{
         }
 
 
+    }
+    */
+
+    handleChangeThingsByBategories(){
+        if(document.querySelectorAll('#categories-list') === null) return;
+        let categoriesLinks = document.querySelectorAll('#categories-list');
+
+        HelperCategories.handleChangeThingsByBategories(categoriesLinks);
     }
     
     async categoriesList(){ 
