@@ -1,6 +1,6 @@
 # Portfólio
 ### Objetivo:
-Estagiar como desenvolvedor web front-end, back-end ou fullstack. 
+Estagiar como desenvolvedor web front-end, back-end ou full stack. 
 
 ### Video: falando um pouco sobre mim, minhas experiências e habilidades como desenvolvedor web.
 ```  
