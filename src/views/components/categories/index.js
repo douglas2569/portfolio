@@ -35,6 +35,7 @@ class LayoutCateogoriesList{
         if(allCategories.error !== '') return;
         
         let categoriesPanel = document.createElement('div');       
+        categoriesPanel.setAttribute('class','categories-panel-modal');
 
         let ul = document.createElement('ul');
         ul.setAttribute('class','categories-list-panel');
@@ -43,11 +44,9 @@ class LayoutCateogoriesList{
             if(allCategories.result[index].name !== 'Todas'){
                 let li = document.createElement('li');
                 let a = document.createElement('a');
-                let span = document.createElement('span');
                 a.setAttribute('data-id',allCategories.result[index].id);
-                span.textContent = allCategories.result[index].name;
-
-                a.appendChild(span);
+                a.textContent = allCategories.result[index].name;
+                                
                 li.appendChild(a);
                 ul.appendChild(li)
             }    

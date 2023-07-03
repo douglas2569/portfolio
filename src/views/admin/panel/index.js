@@ -10,6 +10,7 @@ import HelperCategories from '../../helpers/categories/index.js';
 import LayoutThing from '../../components/thing/index.js';
 import LayoutHeaderContent from '../../components/headercontent/index.js';
 import LayoutCateogoriesList from '../../components/categories/index.js';
+import LayoutFooter from "../../components/footer/index.js";
 
 class Panel extends Controller{
     constructor(){
@@ -81,7 +82,7 @@ class Panel extends Controller{
     
     createHeaderContent(){
         const contentHeader = new LayoutHeaderContent();
-        contentHeader.create(document.querySelector('header .container'), `${config.urlBase}/src/views/admin/panel/`, true, true, false, false);
+        contentHeader.create(document.querySelector('header .container'), `${config.urlBase}/src/views/admin/panel/`, true, true, false, false, false);
     }  
     
 
@@ -89,8 +90,15 @@ class Panel extends Controller{
         if(document.querySelectorAll('#categories-list') === null) return;
         let categoriesLinks = document.querySelectorAll('#categories-list');
 
-        HelperCategories.handleChangeThingsReservedByBategories(categoriesLinks);
+        HelperCategories.handleChangeThingsReservedByCategories(categoriesLinks);
     }
+
+    appendFooter(){
+        let containerFooter = document.querySelector("footer .container");
+        const layoutFooter  = new LayoutFooter();
+        layoutFooter.create(containerFooter, config);        
+        
+    } 
     
 
 }
@@ -104,6 +112,7 @@ panel.goToReturnedThing();
 panel.goToManageThings();
 panel.goToReservedThing();
 panel.handleChangeThingsByBategories();
+panel.appendFooter();
 
 HelperSandwichMenu.createSandwichMenu();
 HelperSandwichMenu.goToProfile();
