@@ -1,8 +1,10 @@
 import ModelCategories from './src/models/categories/index.js';
 import ModelThings from './src/models/things/index.js';
+
 import LayoutThing from './src/views/components/thing/index.js';
 import LayoutHeaderContent from './src/views/components/headercontent/index.js';
 import LayoutCateogoriesList from './src/views/components/categories/index.js';
+import LayoutBreadcrumbs from './src/views/components/breadcrumbs/index.js';
 
 import HelperSearch from './src/views/helpers/search/index.js';
 import HelperCategories from './src/views/helpers/categories/index.js';
@@ -54,24 +56,21 @@ class Home {
     
     handleThingsByCategories(){
         let categoriesLinks = document.querySelectorAll('.categories-list li a');
-        HelperCategories.handleThingsByCategoriesHome(categoriesLinks);
+        HelperCategories.handleThingsByCategories(categoriesLinks);
     }
 
     handleThingsByCategoriesPanel(){
         let categoriesLinks = document.querySelectorAll('.categories-list-panel li a');
-        HelperCategories.handleThingsByCategoriesHome(categoriesLinks);
+        HelperCategories.handleThingsByCategoriesModal(categoriesLinks);
     }
-
-    setClassActive(){
-
-    }
+    
     async thingsList(){
         
-            const allThings = await this.modelThings.getAll();           
-            
-            let  thingsList = document.querySelector(".things-list");
-            
-            this.layoutThing.create(thingsList, allThings, true, 'users/things/show-object');
+        const allThings = await this.modelThings.getAll();           
+        
+        let  thingsList = document.querySelector(".things-list");
+        
+        this.layoutThing.create(thingsList, allThings, true, 'users/things/show-object');
 
     }
         
@@ -128,13 +127,45 @@ class Home {
   
     createHeaderContent(){
         const contentHeader = new LayoutHeaderContent();
-        contentHeader.create(document.querySelector('header .container'));
+        contentHeader.create(document.querySelector('header .container'), config.urlBase, true, false, true, true, false);
+        
     }
 
     async createModalCategories(){
-        let container = document.querySelector('footer .container');
+        let container = document.querySelector('main .container');
         const layoutCateogoriesList = new LayoutCateogoriesList();
         await layoutCateogoriesList.createPanel(container);
+    }
+
+    handleButtonAllCategories(){
+        let btnAllCategories = document.querySelector('#all-categories');
+        btnAllCategories.addEventListener('click',()=>{
+            document.querySelector('.categories-panel-modal').style.display = 'block';
+            document.querySelector('.header-top-body .search-button').style.display = 'none';
+            document.querySelector('.container-header').style.display = 'none';
+            document.querySelector('main .container .things-list').style.display = 'none';
+            document.querySelector('ul.breadcrumb').style.display = 'block';
+        });
+    }
+    
+
+    createBreadcrumbs(){
+        const layoutBreadcrumbs = new LayoutBreadcrumbs();
+        let ul = document.querySelector('.container .header-body ul.breadcrumb');
+        const values = [];
+        
+        values.push( {name:'Tela inicial', href:`${config.urlBase}`}  );
+        values.push( {name:'Todas as categorias', href:'#'}  );
+        
+        layoutBreadcrumbs.create(ul, values);        
+
+    }
+    
+
+    handleButtonInfo(){
+        document.querySelector('.info-button').addEventListener('click',()=>{
+            window.location.href = `${config.urlBase}/src/views/users/information`;
+        });
     }
 
 }
@@ -143,10 +174,13 @@ const home = new Home();
 await home.createModalCategories();
 await home.categoriesList();
 home.createHeaderContent();
+home.createBreadcrumbs();
 home.handleThingsByCategories();
 home.handleThingsByCategoriesPanel();
 await home.thingsList();
 home.filterThings();
+home.handleButtonAllCategories();
+home.handleButtonInfo();
 
 HelperSearch.createModalSearch();
 HelperSearch.searchItem();
