@@ -1,10 +1,17 @@
 # Portfólio
 
+## Video: falando um pouco sobre mim, minhas experiências e habilidades como desenvolvedor web.
+```  
+https://youtu.be/anql8D29g6k
+```  
+### Link do App Web Achaí (Nota: por ser uma hospedagem gratuita, em alguns momentos, o app pode ficar fora do ar. 
+https://achai404.000webhostapp.com/achai/
+
 ## Sobre
 Olá, sou o Douglas, estou cursando Sistemas e Mídias Digitais na Universidade Federal do Ceará, 3° semestre, mas desde 2021 que estudo Desenvolvimento de Sistemas WEB. Por conta disso, consegui desenvolver uma lógica de programação consistente, o que me deixou confortável para, recentemente, começar a estudar alguns frameworks (Bootstrap, Angular JS e Express JS). Ademais, meu nível de inglês técnico é básico para intermediário (leitura), o que me ajudar quando preciso consultar documentações, sites ou comunidades de programação, seja para estudo ou resolução de Bugs. 
 
 Atualmente, estou atuando como Full Stack em uma equipe composta por 6 pessoas (5 Designers UI/UX) no desenvolvimento de um aplicativo web para a universidade na qual estudo. As tecnologias que estão sendo usadas são HTML5, CSS3, JavaScript, PHP OO e MySQL. Além disso, a arquitetura de software que está sendo utilizada é a MVC. Essa estrutura foi escolhida porque, além de facilitar a manutenção do código, ela facilita o trabalho com API REST, visto que o padrão de projeto MVC separa a parte do sistema que se comunica com o usuário da parte que manipula o banco de dados.
-
+ 
 ### linkedin:
 ```  
 https://www.linkedin.com/in/carlos-douglas-79746927a/
@@ -13,11 +20,6 @@ https://www.linkedin.com/in/carlos-douglas-79746927a/
  
 Este projeto tem por objetivo digitalizar o serviço de Achados e perdidos do Bloco UFC Virtual, trazendo mais praticidade tanto para o utilizador final quanto para a secretaria do bloco que administra o serviço.  
 
-## Video apresentando as funcionalidades concluídas 
-```  
-https://youtu.be/rm69rvWhq3g
-```  
- 
 ## Instalação e Manutenção    
 
 Para rodar o projeto é necessário ter em sua maquina um servidor web (o php instalado nele) e o banco de dados MySQL, tudo isso pode ser usado através do software [XAMPP] (https://www.apachefriends.org/), bastando instalá-lo e configurá-lo em sua maquina. Alem disso, se faz necessário a instalação do software [Composer] (https://getcomposer.org) para a instalação de dependências no projeto. 
