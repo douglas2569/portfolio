@@ -1,11 +1,13 @@
 # Portfólio
 
-## Video: falando um pouco sobre mim, minhas experiências e habilidades como desenvolvedor web.
+### Video: falando um pouco sobre mim, minhas experiências e habilidades como desenvolvedor web.
 ```  
 https://youtu.be/anql8D29g6k
 ```  
 ### Link do App Web Achaí (Nota: por ser uma hospedagem gratuita, em alguns momentos, o app pode ficar fora do ar. 
+```  
 https://achai404.000webhostapp.com/achai/
+```  
 
 ## Sobre
 Olá, sou o Douglas, estou cursando Sistemas e Mídias Digitais na Universidade Federal do Ceará, 3° semestre, mas desde 2021 que estudo Desenvolvimento de Sistemas WEB. Por conta disso, consegui desenvolver uma lógica de programação consistente, o que me deixou confortável para, recentemente, começar a estudar alguns frameworks (Bootstrap, Angular JS e Express JS). Ademais, meu nível de inglês técnico é básico para intermediário (leitura), o que me ajudar quando preciso consultar documentações, sites ou comunidades de programação, seja para estudo ou resolução de Bugs. 
