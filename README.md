@@ -2,7 +2,7 @@
 ### Objetivo:
 Estagiar como desenvolvedor web front-end, back-end ou full stack. 
 
-### Video: falando um pouco sobre mim, minhas experiências e habilidades como desenvolvedor web.
+### Falando um pouco sobre mim, minhas experiências e habilidades como desenvolvedor web.
 ```  
 https://youtu.be/anql8D29g6k
 ```  
