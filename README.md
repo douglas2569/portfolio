@@ -6,7 +6,7 @@ Estagiar como desenvolvedor web front-end, back-end ou full stack.
 ```  
 https://youtu.be/anql8D29g6k
 ```  
-### Link do App Web Achaí (Nota: por ser uma hospedagem gratuita, em alguns momentos, o app pode ficar fora do ar. 
+### Link do App Web Achaí (Nota: por ser uma hospedagem gratuita, em alguns momentos, o app pode ficar fora do ar).
 ```  
 https://achai2.000webhostapp.com/achai/
 ```  
