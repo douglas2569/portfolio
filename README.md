@@ -8,7 +8,7 @@ https://youtu.be/anql8D29g6k
 ```  
 ### Link do App Web Achaí (Nota: por ser uma hospedagem gratuita, em alguns momentos, o app pode ficar fora do ar. 
 ```  
-https://achai404.000webhostapp.com/achai/
+https://achai2.000webhostapp.com/achai/
 ```  
 ### Informações de contato. 
  E-mail: douglas2570@gmail.com
