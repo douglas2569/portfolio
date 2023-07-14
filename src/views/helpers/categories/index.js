@@ -192,6 +192,7 @@ class HelperCategories{
         }
     }
 
+
     static handleThingsByCategoriesModal(allLinks){
         this.modelThings = new ModelThings();
         this.layoutThing = new LayoutThing(); 

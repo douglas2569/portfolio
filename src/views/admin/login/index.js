@@ -68,6 +68,13 @@ setTabOrder(){
     HelperTabOrder.setTabOrder(tabOrderLogin);
 }
 
+    appendFooter(){
+        let containerFooter = document.querySelector("footer .container");
+        const layoutFooter  = new LayoutFooter();
+        layoutFooter.create(containerFooter, config);        
+        
+    } 
+
 }
 
 const adms = new Adm();

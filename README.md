@@ -1,14 +1,18 @@
 # Portfólio
+### Objetivo:
+Estagiar como desenvolvedor web front-end, back-end ou full stack. 
 
-### Video: falando um pouco sobre mim, minhas experiências e habilidades como desenvolvedor web.
+### Falando um pouco sobre mim, minhas experiências e habilidades como desenvolvedor web.
 ```  
 https://youtu.be/anql8D29g6k
 ```  
-### Link do App Web Achaí (Nota: por ser uma hospedagem gratuita, em alguns momentos, o app pode ficar fora do ar. 
+### Link do App Web Achaí (Nota: por ser uma hospedagem gratuita, em alguns momentos, o app pode ficar fora do ar).
 ```  
-https://achai404.000webhostapp.com/achai/
+https://achai2.000webhostapp.com/achai/
 ```  
-
+### Informações de contato. 
+ E-mail: douglas2570@gmail.com
+ 
 ## Sobre
 Olá, sou o Douglas, estou cursando Sistemas e Mídias Digitais na Universidade Federal do Ceará, 3° semestre, mas desde 2021 que estudo Desenvolvimento de Sistemas WEB. Por conta disso, consegui desenvolver uma lógica de programação consistente, o que me deixou confortável para, recentemente, começar a estudar alguns frameworks (Bootstrap, Angular JS e Express JS). Ademais, meu nível de inglês técnico é básico para intermediário (leitura), o que me ajudar quando preciso consultar documentações, sites ou comunidades de programação, seja para estudo ou resolução de Bugs. 
 
@@ -29,7 +33,7 @@ Para rodar o projeto é necessário ter em sua maquina um servidor web (o php in
 ### Instalação
 1. Instale o executável do xampp e do composer (Só nexts padrão)
 2. Clonar o projeto do Github (pode ser feito através do Github Desktop ou do comando `git clone [url]`) ou baixando o zip
-3. Recorte a pasta 'achai' e cole dentro do diretório htdocs do xammp (C:\xampp\htdocs)
+3. Crie a pasta 'achai, coloque os arquivos baixados dentro,  e cole dentro do diretório htdocs do xammp (C:\xampp\htdocs)
 4. Inicie o xampp e ative o servidor Apache e o banco MySQL.
 5. No servidor Apache click no botão 'config' -> PHP (php.in). Nesse arquivo habilite as extensões gd (extension=gd) e zip (extension=zip)  | IMPORTANTE: reinicie o servidor apache após essas alterações.
 6. Com um terminal na pasta 'achai/api/' do projeto que foi clonado, instalar as dependências através do comando:
