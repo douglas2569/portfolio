@@ -2,12 +2,15 @@ class LayoutBreadcrumbs{
 
     constructor(){}
 
-    async create(ul, values=[]){
+    create(ul, values=[]){
         if(values.length <= 0) return;
         
         for (let index = 0; index < values.length; index++) {
-            let a = document.createElement('a');
-            a.setAttribute('href',values[index].href);
+            let a = document.createElement('a');            
+            if(values[index].href !='none'){
+                a.setAttribute('href', values[index].href);
+            }
+
             a.textContent = values[index].name;
 
             let li = document.createElement('li');

@@ -3,9 +3,13 @@ import Controller from '../../../core/controller/index.js';
 import config from '../../../../config.js';
 
 import HelperSandwichMenu from '../../helpers/sandwichmenu/index.js';
+import HelperTabOrder from '../../helpers/taborder/index.js';
 
 import LayoutHeaderContent from '../../components/headercontent/index.js';
 import LayoutBreadcrumbs from '../../components/breadcrumbs/index.js';
+import LayoutFooter from '../../components/footer/index.js';
+
+import tabOrderThings from "../things/taborder/index.js";
 
 class Things extends Controller{
 
@@ -51,16 +55,6 @@ class Things extends Controller{
         }); 
     }
 
-    goToRegisterthing(){
-        document.querySelector("#register-things-button").addEventListener("click",(e)=>{            
-            e.preventDefault();
-            let prevPage = `${config.urlBase}/src/views/admin/things/manager/`;
-            window.location.href = `${config.urlBase}/src/views/admin/things/register/?prevPage=${prevPage}`;           
-            
-        });
-        
-    }
-
     createHeaderContent(){
         const contentHeader = new LayoutHeaderContent();
         contentHeader.create(document.querySelector('header .container'), `${config.urlBase}/src/views/admin/panel/`, false, true, true, false);
@@ -72,7 +66,7 @@ class Things extends Controller{
         const values = [];
         
         values.push( {name:'Tela inicial', href:`${config.urlBase}/src/views/admin/panel/`}  );
-        values.push( {name:'Gerenciar objetos', href:'#'}  );
+        values.push( {name:'Gerenciar objetos', href:this.retrieveURLCurrentPage()}  );
         
         layoutBreadcrumbs.create(ul, values);        
 
@@ -87,16 +81,29 @@ class Things extends Controller{
         });
     }
 
+    appendFooter(){
+        let containerFooter = document.querySelector("footer .container");
+        const layoutFooter  = new LayoutFooter();
+        layoutFooter.create(containerFooter, config, true);        
+        
+    }
+
+    setTabOrder(){
+        const elementsList = tabOrderThings;                
+        HelperTabOrder.setTabOrder(elementsList);
+    }
+
 }
 
 const things = new Things();
 things.createHeaderContent();
 things.createBreadcrumbs();
 things.arrowBack();
+things.appendFooter();
 
-things.categoriesList();
+await things.categoriesList();
 things.handleClickCategory();
-things.goToRegisterthing();
+things.setTabOrder();
 
 
 HelperSandwichMenu.createSandwichMenu();
@@ -104,5 +111,4 @@ HelperSandwichMenu.goToProfile();
 HelperSandwichMenu.goToDiscardeThings();
 HelperSandwichMenu.goToCategoryManager();
 HelperSandwichMenu.openSandwichMenu();
-HelperSandwichMenu.closeSandwichMenu();
-// HelperSandwichMenu.goToReturnedThings();
+HelperSandwichMenu.closeSandwichMenu('things');

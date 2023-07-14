@@ -6,6 +6,12 @@ import HelperSandwichMenu from '../../helpers/sandwichmenu/index.js';
 
 import LayoutHeaderContent from '../../components/headercontent/index.js';
 import LayoutBreadcrumbs from '../../components/breadcrumbs/index.js';
+import LayoutFooter from '../../components/footer/index.js';
+
+import HelperTabOrder from '../../helpers/taborder/index.js';
+
+import tabOrderCategories from "./taborder/index.js";
+
 
 class Categories extends Controller{
     constructor(){        
@@ -16,7 +22,7 @@ class Categories extends Controller{
     } 
     
     async showAll(){    
-        let tableBody = document.querySelector("tbody");
+        let tableBody = document.querySelector(".tbody");
         tableBody.textContent = '';
         
         const allCategories = await this.modelCategories.getAll();
@@ -24,28 +30,41 @@ class Categories extends Controller{
         if(!allCategories.error){  
                       
             for (let i = 0; i < allCategories.result.length; ++i) {
-                let tr = document.createElement("tr");                
-                let td1 = document.createElement("td"); 
-                let td2 = document.createElement("td");                 
-                let spanDelete = document.createElement('span');
-                let input = document.createElement('input');              
-
-                input.setAttribute('value',allCategories.result[i].name);               
-                input.setAttribute('class','category-name');               
-                td1.appendChild(input);
                 
                 if(allCategories.result[i].icon_name === null){
-                    spanDelete.textContent = 'delete';
-                    spanDelete.setAttribute('class','material-symbols-rounded delete-button');
-                    td2.appendChild(spanDelete);
-                }                
-                                
-                
-                tr.setAttribute("data-id",allCategories.result[i].id);                
-                tr.appendChild(td1);                
-                tr.appendChild(td2);                
-                
-                tableBody.appendChild(tr);
+                    let tr = document.createElement("div");                
+                    let td1 = document.createElement("div"); 
+                    let td2 = document.createElement("div");                 
+                    let deleteButton = document.createElement('img');
+                    let editButton = document.createElement('img');
+                    let input = document.createElement('input');   
+                    
+                    tr.setAttribute('class','tr'); ;  
+
+                    input.setAttribute('value',allCategories.result[i].name);               
+                    input.setAttribute('class','category-name');               
+                    input.setAttribute('name','name');               
+                    td1.appendChild(input);                    
+                    td1.setAttribute('class','td'); ;                    
+                    
+                    editButton.src = `${config.urlBase}/assets/imgs/icons/button_check_off.svg`;
+                    editButton.setAttribute('class','material-symbols-rounded update-button');                    
+                    editButton.alt = "salvar edição desativado";                    
+                    td2.appendChild(editButton);  
+                    td2.setAttribute('class','td'); ;                             
+                    
+                    deleteButton.src = `${config.urlBase}/assets/imgs/icons/delete_FILL0_wght300_GRAD0_opsz24.svg`;
+                    deleteButton.setAttribute('class','material-symbols-rounded delete-button');
+                    deleteButton.setAttribute('alt','botão excluir');
+                    td2.appendChild(deleteButton); 
+
+                    tr.setAttribute("data-id",allCategories.result[i].id);                
+                    tr.appendChild(td1);                
+                    tr.appendChild(td2);                
+                    
+                    tableBody.appendChild(tr);
+
+                } 
                 
             }
 
@@ -136,58 +155,36 @@ class Categories extends Controller{
                
         
         
+    }  
+
+    handleInputField(){
+        let fieldsCategoryName = document.querySelectorAll('.category-name');
+       
+        fieldsCategoryName.forEach((field)=>{
+            field.addEventListener('keyup', (event)=>{                                                               
+                const updateButton = event.target.parentNode.parentNode.querySelector('.update-button');                
+                updateButton.src = `${config.urlBase}/assets/imgs/icons/button_check_on.svg`;
+                updateButton.alt = 'salvar edição ativado';
+
+                event.target.parentNode.parentNode.querySelector('.update-button').addEventListener('click', ()=>{
+                    this.updateButtonEventFunction(event);
+                });
+    
+            });
+        });        
+        
     }
 
-    update(){        
-        
-        if(document.querySelector(".category-name") === null) return;
-        let allCategories = document.querySelectorAll('.category-name');
-        
-        for (let i = 0; i < allCategories.length; i++) {              
-            if(allCategories[i].parentNode.parentNode.textContent.includes('delete')){
-                allCategories[i].addEventListener("keyup",async (e)=>{                 
-                    let key = e.which || e.keyCode;
-                    if (key == 13) { 
-                        const id = e.target.parentNode.parentNode.getAttribute('data-id'); 
-                        this.updateAssistant(id, allCategories[i].value); 
-                        e.target.blur();                   
-                    }
-                    
-                });
+    updateButtonEventFunction = (event)=>{
+        const updateButton = event.target.parentNode.parentNode.querySelector('.update-button');                 
+        const categoryId = event.target.parentNode.parentNode.getAttribute('data-id');
 
-            }else{
-                allCategories[i].addEventListener("keyup",async (e)=>{
-                    let key = e.which || e.keyCode;
-                    if (key == 13) {
-
-                        let msg = 'Você não pode alterar essa categoria.'; 
-
-                        let div = document.createElement('div');        
-                        div.textContent = msg;       
-
-                        div.setAttribute('class','fail-message');   
-                        div.style.display = 'block';             
-                        document.querySelector('main .container').appendChild(div);
-
-                        setInterval(() =>{            
-                            if(div.parentNode !== null){            
-                                div.parentNode.removeChild(div);
-                            }
-                            
-                            clearInterval(this);
-                        },3000);
-                        
-                    }     
-
-                
-
-                });
-            }
-            
-            
-        }       
-
-    } 
+        const category = event.target.parentNode.parentNode.querySelector('.category-name');
+        updateButton.src = `${config.urlBase}/assets/imgs/icons/button_check_off.svg`;
+        updateButton.onclick = null;                
+        this.updateAssistant(categoryId, category.value);
+    }
+    
     
     createHeaderContent(){
         const contentHeader = new LayoutHeaderContent();
@@ -200,7 +197,7 @@ class Categories extends Controller{
         const values = [];
         
         values.push( {name:'Tela inicial', href:`${config.urlBase}/src/views/admin/panel/`}  );
-        values.push( {name:'Editar categorias', href:'#'}  );
+        values.push( {name:'Editar categorias', href:this.retrieveURLCurrentPage()}  );
         
         
         layoutBreadcrumbs.create(ul, values);        
@@ -215,6 +212,18 @@ class Categories extends Controller{
             
         });
     }
+
+    appendFooter(){
+        let containerFooter = document.querySelector("footer .container");
+        const layoutFooter  = new LayoutFooter();
+        layoutFooter.create(containerFooter, config, true);        
+        
+    } 
+
+    setTabOrder(){                       
+        HelperTabOrder.setTabOrder(tabOrderCategories);
+    }
+
    
     
 }
@@ -225,13 +234,15 @@ categories.createBreadcrumbs();
 categories.goToCategoryRegister();
 await categories.showAll();
 categories.delete();
-categories.update();
+categories.handleInputField();
 categories.arrowBack();
+categories.appendFooter();
+categories.setTabOrder();
 
 HelperSandwichMenu.createSandwichMenu();
 HelperSandwichMenu.goToProfile();
 HelperSandwichMenu.goToDiscardeThings();
 HelperSandwichMenu.goToCategoryManager();
 HelperSandwichMenu.openSandwichMenu();
-HelperSandwichMenu.closeSandwichMenu();
+HelperSandwichMenu.closeSandwichMenu('categories');
 // HelperSandwichMenu.goToReturnedThings();

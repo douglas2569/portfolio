@@ -6,12 +6,15 @@ import config from '../../../../../config.js';
 import LayoutThing from '../../../components/thing/index.js';
 import LayoutHeaderContent from '../../../components/headercontent/index.js';
 import LayoutModalSearch from '../../../components/modalsearch/index.js';
-import LayoutSandwichMenu from '../../../components/sandwichmenu/index.js';
 import LayoutCateogoriesList from '../../../components/categories/index.js';
 import LayoutBreadcrumbs from '../../../components/breadcrumbs/index.js';
+import LayoutFooter from '../../../components/footer/index.js';
 
 import HelperCategories from '../../../helpers/categories/index.js';
 import HelperSandwichMenu from '../../../helpers/sandwichmenu/index.js';
+import HelperTabOrder from '../../../helpers/taborder/index.js';
+
+import tabOrderManager from "../../../admin/things/manager/taborder/index.js";
 
 class ThingsManager extends Controller{
 
@@ -29,7 +32,7 @@ class ThingsManager extends Controller{
 
         let allThings = {};
         
-        if (this.categoriesIdUrl !== undefined && this.categoriesIdUrl !== '0') {
+        if (this.categoriesIdUrl !== undefined && this.categoriesIdUrl !== '105') {
             allThings = await this.modelThings.getThingsByCategoryId(this.categoriesIdUrl);            
         }else{
             allThings = await this.modelThings.getAll();            
@@ -37,7 +40,7 @@ class ThingsManager extends Controller{
 
         let  thingsList = document.querySelector(".things-list");
         
-        this.layoutThing.create(thingsList, allThings,true, 'admin/things/interaction');
+        await this.layoutThing.create(thingsList, allThings,true, 'admin/things/interaction');
 
     }
         
@@ -63,8 +66,7 @@ class ThingsManager extends Controller{
         let categories = document.querySelector('.categories');
         
         const layoutCateogoriesList = new  LayoutCateogoriesList();
-        layoutCateogoriesList.create(categories);
-             
+        await layoutCateogoriesList.create(categories);             
 
     } 
           
@@ -109,29 +111,7 @@ class ThingsManager extends Controller{
             
         });        
     }
-
-    openSandwichMenu(){
-        
-        document.querySelector(".sandwich-menu-button").addEventListener("click",(e)=>{
-            
-            document.querySelector("#search-modal").style.display = 'none';
-            document.querySelector(".background-modal").style.display = 'block';           
-            document.querySelector(".sandwich-menu-body").setAttribute("style","display:block");            
-            
-        });
-               
-    }
-
-    closeSandwichMenu(){
-        document.querySelector(".close-modal").addEventListener("click",(e)=>{
-
-            document.querySelector(".sandwich-menu-body").setAttribute("style","display:none");
-            document.querySelector(".background-modal").style.display = 'none'; 
-            
-            
-        });        
-    }
-
+    
     createHeaderContent(){
         const contentHeader = new LayoutHeaderContent();
         contentHeader.create(document.querySelector('header .container'), `${config.urlBase}/src/views/admin/panel/`, true, true,true,false);
@@ -140,12 +120,8 @@ class ThingsManager extends Controller{
     createModalSearch(){
         const layoutModalSearch = new LayoutModalSearch();
         layoutModalSearch.create(document.querySelector('.background-modal .container'));
-    }
+    }    
     
-    createSandwichMenu(){
-        const layoutSandwichMenu = new LayoutSandwichMenu();
-        layoutSandwichMenu.create(document.querySelector('.background-modal .container'));
-    }
 
     createBreadcrumbs(){
         const layoutBreadcrumbs = new LayoutBreadcrumbs();
@@ -154,7 +130,7 @@ class ThingsManager extends Controller{
         
         values.push( {name:'Tela inicial', href:`${config.urlBase}/src/views/admin/panel/`}  );
         values.push( {name:'Gerenciar Objetos', href: `${config.urlBase}/src/views/admin/things/`}  );       
-        values.push( {name:'Objetos filtrados', href:'#'}  );        
+        values.push( {name:'Objetos filtrados', href:this.retrieveURLCurrentPage()}  );        
 
         layoutBreadcrumbs.create(ul, values);
     }
@@ -168,24 +144,52 @@ class ThingsManager extends Controller{
         });
     }
 
+    appendFooter(){
+        let containerFooter = document.querySelector("footer .container");
+        const layoutFooter  = new LayoutFooter();
+        layoutFooter.create(containerFooter, config, true);        
+        
+    } 
+    
+    appendRegisterThingsButton(){
+       let headerFooter = document.querySelector(".header-footer");
+       
+       let button = document.createElement('button'); 
+       button.setAttribute('id','register-things-button');       
+       
+       let img = document.createElement('img');  
+       img.src = `${config.urlBase}/assets/imgs/icons/add_FILL0_wght300_GRAD0_opsz40.svg`
+       img.alt = 'Cadastrar objeto'
+
+       button.appendChild(img)
+       headerFooter.appendChild(button);        
+    } 
+
+    setTabOrder(){
+        const elementsList = tabOrderManager;                
+        HelperTabOrder.setTabOrder(elementsList);
+    }
 }
 
 const thingsManager = new ThingsManager();
-thingsManager.createSandwichMenu();
 thingsManager.createHeaderContent();
 thingsManager.createBreadcrumbs();
 thingsManager.createModalSearch();
 await thingsManager.categoriesList();
 await thingsManager.thingsList(); 
+thingsManager.appendRegisterThingsButton();
 thingsManager.goToRegisterthing();
 thingsManager.searchItem();
 thingsManager.openSearchModal();
 thingsManager.closeSearchModal();
 thingsManager.handleChangeThingsByBategories();
-thingsManager.openSandwichMenu();
-thingsManager.closeSandwichMenu();
 thingsManager.arrowBack();
+thingsManager.appendFooter();
+thingsManager.setTabOrder();
 
+HelperSandwichMenu.createSandwichMenu();
 HelperSandwichMenu.goToProfile();
 HelperSandwichMenu.goToDiscardeThings();
 HelperSandwichMenu.goToCategoryManager();
+HelperSandwichMenu.openSandwichMenu();
+HelperSandwichMenu.closeSandwichMenu('manager');

@@ -5,8 +5,13 @@ import config from '../../../../../config.js';
 
 import LayoutHeaderContent from '../../../components/headercontent/index.js';
 import LayoutBreadcrumbs from '../../../components/breadcrumbs/index.js';
+import LayoutFooter from '../../../components/footer/index.js';
 
 import HelperSandwichMenu from '../../../helpers/sandwichmenu/index.js';
+import HelperTabOrder from '../../../helpers/taborder/index.js';
+
+import tabOrderRegister,{tabOrderRegisterModalTakePicture, tabOrderRegisterModalCamera} from "../../../admin/things/register/taborder/index.js";
+
 
 class ThingRegistration extends Controller{
 
@@ -17,7 +22,7 @@ class ThingRegistration extends Controller{
     this.modelThings = new  ModelThings();
     this.prevPage = this.getPrevPageURL();       
     this.currentPage = this.retrieveURLCurrentPage();
-    this.takePictureBlob = "empty";
+    this.takePictureBlob = "empty";    
 
     }
 
@@ -27,21 +32,24 @@ class ThingRegistration extends Controller{
 
         if(!allCategories.error){                        
             for (let i = 0; i < allCategories.result.length; ++i) { 
-                if(allCategories.result[i].name !== 'Todas') {
+                if(allCategories.result[i].name !== 'Todas' && allCategories.result[i].name !== 'Ver todos') {
                     let option = document.createElement("option"); 
                     option.setAttribute("value",allCategories.result[i].id);              
                     option.appendChild(document.createTextNode(allCategories.result[i].name));
                     this.select.appendChild(option);                 
                 }
+                
             }           
             
         }    
 
     }    
 
-    save(){        
-        document.querySelector("#save-button").addEventListener("click", (e)=>{             
+    async save(){        
+        document.querySelector("#save-button").addEventListener("click", async (e)=>{             
             e.preventDefault();                      
+            document.querySelector("#save-button").setAttribute('disabled','');
+            document.querySelector("#save-button").textContent = 'Cadastrando...';
 
             let formData = new FormData(document.querySelector('form'));            
 
@@ -51,26 +59,25 @@ class ThingRegistration extends Controller{
             if(localStorage.getItem("hash")){
                 formData.append('hash',localStorage.getItem("hash"));
                 
-            }                              
-                                    
-            this.modelThings.insert(this.prevPage, formData);     
+            }                        
             
-
+            await this.modelThings.insert(this.prevPage, formData);                            
+            
         });
-    }
-   
+    }   
 
     takePicture(){
 
         let video = document.querySelector('.cam-modal video');
         
         navigator.mediaDevices.getUserMedia({video:{ 
-            /*
+            
             facingMode: {
-                exact: 'environment'
+                //exact: 'environment'
               }
-              */
+              
             }
+            
         })
         .then(stream => {
             video.srcObject = stream;
@@ -82,9 +89,13 @@ class ThingRegistration extends Controller{
 
             
         if(!(document.querySelector('#take-picture-button') == null)){
-            document.querySelector('#take-picture-button').addEventListener('click', async () => {                
-                document.querySelector('div.background-modal').style.display = 'none';
-                document.querySelector('.background-modal .container').style.backgroundColor = 'rgba(0,0,0,0.2)';
+            document.querySelector('#take-picture-button').addEventListener('click', async () => { 
+                HelperTabOrder.resetTabOrder(tabOrderRegisterModalCamera);
+                HelperTabOrder.resetTabOrder(tabOrderRegisterModalTakePicture);
+                HelperTabOrder.setTabOrder(tabOrderRegister);  
+
+                document.querySelector('div.background-modal').style.display = 'none';   
+                document.querySelector('body').style.overflow = 'auto';             
 
                 let canvas = document.querySelector('canvas');            
                 
@@ -95,17 +106,20 @@ class ThingRegistration extends Controller{
                 context.drawImage(video, 0, 0);                        
                 
                 let img = document.querySelector('#img-picture');
-                img.src = canvas.toDataURL('image/png');                
+                img.src = canvas.toDataURL('image/png');               
+                img.alt = 'alterar imagem';               
 
                 try {            
                     const response = await fetch(img.src);                           
                     let blob = await response.blob();               
                     
                     this.takePictureBlob = blob;
+                    alert('Foto tirada com sucesso');
                                 
                 } catch(e) {
                     console.log(e);
-                }              
+                }                 
+                
                 
             });
         }       
@@ -128,6 +142,7 @@ class ThingRegistration extends Controller{
         
             const img = document.querySelector("#img-picture"); 
             img.src = readerTarget.result;  
+            img.alt = 'alterar imagem'; 
                             
             globalThis.takePictureBlob = "empty";
         
@@ -142,32 +157,40 @@ class ThingRegistration extends Controller{
 
     }
 
-
     closeImageRegistrationModal(){
         document.querySelector('#exit-modal-button').addEventListener('click',()=>{
-            document.querySelector('div.background-modal').style.display = 'none';
+            document.querySelector('div.background-modal').style.display = 'none'; 
+            HelperTabOrder.resetTabOrder(tabOrderRegisterModalTakePicture);
+            HelperTabOrder.setTabOrder(tabOrderRegister);          
+             
         });
 
     }
 
-    openImageRegistrationModal(){
+    openImageRegistrationModal(){        
         
         document.querySelector('#open-picture-modal').addEventListener('click',()=>{  
             document.querySelector('div.background-modal').style.display = 'block';          
             document.querySelector('.cam-modal').style.display = 'flex';
             document.querySelector('#img-register-modal').style.display = 'none';
-            document.querySelector('.sandwich-menu-body').style.display = 'none;'
-            document.querySelector('.background-modal .container').style.backgroundColor = '#1c1b1f';
+            document.querySelector('.sandwich-menu-body').style.display = 'none;'            
+            document.querySelector('body').style.overflow = 'hidden';   
+                        
+            HelperTabOrder.resetTabOrder(tabOrderRegisterModalTakePicture);            
+            HelperTabOrder.setTabOrder(tabOrderRegisterModalCamera);
             
-        });   
+        });           
+        
 
         document.querySelector('#img-picture').addEventListener('click',()=>{
             document.querySelector('div.background-modal').style.display = 'block';
             document.querySelector('#img-register-modal').style.display = 'flex';
-            document.querySelector('.cam-modal').style.display = 'none';            
-        });        
+            document.querySelector('.cam-modal').style.display = 'none';                      
+            
+            HelperTabOrder.resetTabOrder(tabOrderRegister);
+            HelperTabOrder.setTabOrder(tabOrderRegisterModalTakePicture);
 
-        
+        }); 
 
 
     }
@@ -185,13 +208,13 @@ class ThingRegistration extends Controller{
         
         if(this.prevPage.includes('panel')){
             values.push( {name:'Tela inicial', href:this.prevPage}  );
-            values.push( {name:'Cadastrar Objetos', href:'#'}  );
+            values.push( {name:'Cadastrar Objetos', href:this.retrieveURLCurrentPage()}  );
 
         }else if(this.prevPage.includes('manager')){
             values.push( {name:'Tela inicial', href:`${config.urlBase}/src/views/admin/panel/`}  );
             values.push( {name:'Gerenciar Objetos', href: `${config.urlBase}/src/views/admin/things/`}  );
             values.push( {name:'Objetos filtrados', href:`${config.urlBase}/src/views/admin/things/manager/?id=0`}  );
-            values.push( {name:'Cadastrar objetos', href:'#'}  );
+            values.push( {name:'Cadastrar objetos', href:this.retrieveURLCurrentPage()}  );
         }
         
 
@@ -210,25 +233,53 @@ class ThingRegistration extends Controller{
             }
         });
     }
+
+    appendFooter(){
+        let containerFooter = document.querySelector("footer .container");
+        const layoutFooter  = new LayoutFooter();
+        layoutFooter.create(containerFooter, config, true);        
+        
+    } 
+
+    sizeImgRegisterModal(){        
+        let sizeImgRegisterModal = document.querySelector('#img-register-modal');
+        
+        sizeImgRegisterModal.style.width = `${(window.innerWidth -40)}px`;
+        
+    }
+
+    setTabOrder(){                       
+        HelperTabOrder.setTabOrder(tabOrderRegister);
+    }
+
+    setImgsRegisterModal(){
+        document.querySelector('#exit-modal-button').setAttribute('src',`${config.urlBase}/assets/imgs/icons/close_FILL0_wght300_GRAD0_opsz24.svg`);
+        document.querySelector('#open-picture-modal img').setAttribute('src',`${config.urlBase}/assets/imgs/icons/photo_camera_FILL0_wght300_GRAD0_opsz24.svg`);
+        document.querySelector("label[for='image-address'] img").setAttribute('src',`${config.urlBase}/assets/imgs/icons/filter_FILL0_wght300_GRAD0_opsz24.svg`);
+    }
 }
 
 const thingRegistration = new ThingRegistration();
 thingRegistration.createHeaderContent();
 thingRegistration.createBreadcrumbs();
 thingRegistration.selectCategories();
-thingRegistration.save();
+await thingRegistration.save();
 thingRegistration.takePicture();
 thingRegistration.inputFileImageUploadPreview();
 thingRegistration.closeImageRegistrationModal();
 thingRegistration.openImageRegistrationModal();
 thingRegistration.arrowBack();
+thingRegistration.appendFooter();
+thingRegistration.sizeImgRegisterModal();
+thingRegistration.setTabOrder();
+thingRegistration.setImgsRegisterModal();
 
 HelperSandwichMenu.createSandwichMenu();
 HelperSandwichMenu.goToProfile();
 HelperSandwichMenu.goToDiscardeThings();
 HelperSandwichMenu.goToCategoryManager();
 HelperSandwichMenu.openSandwichMenu();
-HelperSandwichMenu.closeSandwichMenu();
+HelperSandwichMenu.closeSandwichMenu('register');
 // HelperSandwichMenu.goToReturnedThings();
 
 

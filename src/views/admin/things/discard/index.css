@@ -8,11 +8,18 @@
     cursor: auto;
 }
 
-#files-zip-button{
-    margin-top: 10px;
-    margin-bottom: 10px;
+.files-zip-button{
+    align-self: self-start;   
 }
 
-button{
-    padding: 7px 6px;    
+.files-zip-list div{
+    display: flex;
+}
+
+#delete-button{
+    cursor: pointer;
+}
+
+.things-list{
+    margin-top: 10px;
 }

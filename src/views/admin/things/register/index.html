@@ -10,26 +10,27 @@
 <body class="body"> 
     <div class="background-modal">        
         <div class="container">
-            <div id="img-register-modal">
-                <div>
-                    <p id="exit-modal-button"></p>
+            <div id="img-register-modal">                
+                
+                <img id="exit-modal-button" alt="Fechar">
+
+                <div id="open-picture-modal">                                        
+                    <img  alt="Tirar foto">                    
+                    <p>Tirar foto</p>
                 </div>
 
-                <div id="open-picture-modal">                    
-                    <span></span>
-                    <p>Camera</p>
-                </div>
-
-                <label for="image-address">
-                    <span></span>                   
-                    <p id="choose-picture-button">Escolher existente</p>            
-                </label>          
+                <label for="image-address">                    
+                    <img  alt="Escolher imagem existente">
+                    <p id="choose-picture-button">Escolher existente</p>                           
+                </label> 
                 
             </div>
 
             <div class="cam-modal">                
                 <video autoplay></video>
-                <button id="take-picture-button"><span></span></span>Tirar Foto</button>
+                <div>                    
+                     <button id="take-picture-button">Tirar Foto</button>                    
+                </div>
             </div>
 
         </div>        
@@ -50,14 +51,16 @@
                 <canvas></canvas>                       
                 <input type="file" name="image_address" id="image-address">                
 
-                <label for="">Categorias</label>
-                <select name="category_id" id="category-id"></select> 
+                <label id="labelCategories">Categorias*</label>
+                <div class="categories">
+                    <select name="category_id" id="category-id"></select> 
+                </div>
                 
-                <label for="">Descrição</label>
-                <textarea name="description" cols="30" rows="10" id="description"></textarea>               
+                <label for="description">Descrição</label>
+                <textarea name="description" id="description" cols="30" rows="10" id="description"></textarea>               
                 
-                <label for="">Informar local</label>
-                <input type="text" name="local" id="local">
+                <label for="local">Informar local*</label>
+                <input type="text" name="local" id="local" required>
                 <button id="save-button">Cadastrar</button>
             </form>            
         </div>

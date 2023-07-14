@@ -6,11 +6,15 @@ import config from "../../../../config.js";
 import HelperSearch from '../../helpers/search/index.js';
 import HelperSandwichMenu from '../../helpers/sandwichmenu/index.js';
 import HelperCategories from '../../helpers/categories/index.js';
+import HelperTabOrder from '../../helpers/taborder/index.js';
 
 import LayoutThing from '../../components/thing/index.js';
 import LayoutHeaderContent from '../../components/headercontent/index.js';
 import LayoutCateogoriesList from '../../components/categories/index.js';
 import LayoutFooter from "../../components/footer/index.js";
+
+import tabOrderPanel from "./taborder/index.js";
+
 
 class Panel extends Controller{
     constructor(){
@@ -18,7 +22,7 @@ class Panel extends Controller{
         this.modelThings = new ModelThings();  
         this.modelCategories = new  ModelCategories();      
         this.currentPage = this.retrieveURLCurrentPage();
-        this.layoutThing = new LayoutThing(); 
+        this.layoutThing = new LayoutThing();         
     } 
     
     async ListThingsReserved(){
@@ -34,8 +38,7 @@ class Panel extends Controller{
         let categories = document.querySelector('.container section .categories');
         
         const layoutCateogoriesList = new  LayoutCateogoriesList();
-        layoutCateogoriesList.create(categories);
-             
+        layoutCateogoriesList.create(categories);             
 
     } 
     
@@ -55,21 +58,6 @@ class Panel extends Controller{
 
         });
         
-    } 
-
-    goToReservedThing(){  
-        
-        let thingsList =  document.querySelectorAll(".things-list figure");              
-       
-        thingsList.forEach((thing)=>{
-            thing.addEventListener("click", (e)=>{   
-                let id = thing.getAttribute("data-id")            
-                window.location.href = `${config.urlBase}/src/views/admin/things/thingreserved/?id=${id}`;                  
-            });    
-        })
-       
-          
-       
     }  
     
     goToReturnedThing(){
@@ -83,10 +71,9 @@ class Panel extends Controller{
     createHeaderContent(){
         const contentHeader = new LayoutHeaderContent();
         contentHeader.create(document.querySelector('header .container'), `${config.urlBase}/src/views/admin/panel/`, true, true, false, false, false);
-    }  
-    
+    }      
 
-    handleChangeThingsByBategories(){
+    handleChangeThingsByBategories(){        
         if(document.querySelectorAll('#categories-list') === null) return;
         let categoriesLinks = document.querySelectorAll('#categories-list');
 
@@ -96,9 +83,25 @@ class Panel extends Controller{
     appendFooter(){
         let containerFooter = document.querySelector("footer .container");
         const layoutFooter  = new LayoutFooter();
-        layoutFooter.create(containerFooter, config);        
+        layoutFooter.create(containerFooter, config, true);        
         
     } 
+
+    setTabOrder(){
+        const elementsList = tabOrderPanel;                
+        HelperTabOrder.setTabOrder(elementsList);
+    }
+
+    setImgspanelButtons(){
+        let imgRegisterThingButton= document.querySelector('.register-thing-button span img');
+        imgRegisterThingButton.setAttribute('src', `${config.urlBase}/assets/imgs/icons/box_add_FILL0_wght300_GRAD0_opsz48.svg`);
+
+        let imgReturnedThingButton = document.querySelector('.returned-thing-button span img');
+        imgReturnedThingButton.setAttribute('src', `${config.urlBase}/assets/imgs/icons/qr_code_scanner_FILL0_wght300_GRAD0_opsz48.svg`);
+
+        let imgManageThingsButton = document.querySelector('.manage-things-button span img');
+        imgManageThingsButton.setAttribute('src', `${config.urlBase}/assets/imgs/icons/box_edit_FILL0_wght300_GRAD0_opsz48.svg`);
+    }
     
 
 }
@@ -110,16 +113,18 @@ await panel.ListThingsReserved();
 panel.goToThingRegister();
 panel.goToReturnedThing();
 panel.goToManageThings();
-panel.goToReservedThing();
+
 panel.handleChangeThingsByBategories();
 panel.appendFooter();
+panel.setTabOrder();
+panel.setImgspanelButtons();
 
 HelperSandwichMenu.createSandwichMenu();
 HelperSandwichMenu.goToProfile();
 HelperSandwichMenu.goToDiscardeThings();
 HelperSandwichMenu.goToCategoryManager();
 HelperSandwichMenu.openSandwichMenu();
-HelperSandwichMenu.closeSandwichMenu();
+HelperSandwichMenu.closeSandwichMenu('panel');
 // HelperSandwichMenu.goToReturnedThings();
 
 HelperSearch.createModalSearch();

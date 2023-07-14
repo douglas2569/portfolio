@@ -5,8 +5,12 @@ import config from '../../../../../config.js';
 
 import LayoutHeaderContent from '../../../components/headercontent/index.js';
 import LayoutBreadcrumbs from '../../../components/breadcrumbs/index.js';
+import LayoutFooter from '../../../components/footer/index.js';
 
 import HelperSandwichMenu from '../../../helpers/sandwichmenu/index.js';
+import HelperTabOrder from '../../../helpers/taborder/index.js';
+
+import tabOrderInteraction, {tabOrderRegisterModalTakePicture, tabOrderRegisterModalCamera} from "../../../admin/things/register/taborder/index.js";
 
 class ThingsInteraction extends Controller{    
 
@@ -27,7 +31,8 @@ class ThingsInteraction extends Controller{
         if(!thing.erro){            
             document.querySelector("#data-id").value = this.identifier;            
             document.querySelector("#code").textContent = `N°:${this.identifier}`; 
-            document.querySelector("form img").setAttribute('src', `achai/${thing.result[0].image_address}`);            
+            document.querySelector("form img").setAttribute('src', `${config.urlBase}/${thing.result[0].image_address}`);            
+            document.querySelector("form img").setAttribute('alt', `alterar imagem`);            
 
             document.querySelector("#image-address").value = thing.result[0].image_address;
 
@@ -55,7 +60,7 @@ class ThingsInteraction extends Controller{
         
         if(!allCategories.error){                        
             for (let i = 0; i < allCategories.result.length; ++i) {  
-                if(allCategories.result[i].name !== 'Todas') {
+                if(allCategories.result[i].name !== 'Todas' && allCategories.result[i].name !== 'Ver todos') {
                     let option = document.createElement("option"); 
                     option.setAttribute("value",allCategories.result[i].id);              
                     option.appendChild(document.createTextNode(allCategories.result[i].name));
@@ -85,8 +90,12 @@ class ThingsInteraction extends Controller{
     
     async update(){
         
-        document.querySelector("#update-button").addEventListener("click",(e)=>{  
+        document.querySelector("#update-button").addEventListener("click", async (e)=>{  
             e.preventDefault();
+
+            document.querySelector("#update-button").setAttribute('disabled','');
+            document.querySelector("#update-button").textContent = 'Atualizando...';
+
 
             let formData = new FormData(document.querySelector('form'));  
             
@@ -98,14 +107,15 @@ class ThingsInteraction extends Controller{
                 formData.append('hash',localStorage.getItem("hash"));
                 
             }
-            let prevPage = `${config.urlBase}/src/views/admin/things/manager/`            
-            this.modelThings.update( prevPage, formData, 'Atualizado'); 
+            let prevPage = `${config.urlBase}/src/views/admin/things/manager/`;
+                      
+            await this.modelThings.update( prevPage, formData, 'Atualizado'); 
         });
 
     }
     async return(){
 
-        document.querySelector("#return-button").addEventListener("click",(e)=>{  
+        document.querySelector("#return-button").addEventListener("click", async (e)=>{  
             e.preventDefault();
 
             let formData = new FormData(document.querySelector('form'));  
@@ -115,8 +125,10 @@ class ThingsInteraction extends Controller{
                 formData.append('hash',localStorage.getItem("hash"));
                 
             }
-            let prevPage = `${config.urlBase}/src/views/admin/things/manager/`            
-            this.modelThings.update( prevPage, formData, 'Retirado'); 
+            let prevPage = `${config.urlBase}/src/views/admin/things/manager/`;
+            document.querySelector("#return-button").setAttribute('disabled','');
+            document.querySelector("#return-button").textContent = "Retirando";
+            await this.modelThings.update( prevPage, formData, 'Retirado'); 
         });
 
 
@@ -132,19 +144,18 @@ class ThingsInteraction extends Controller{
 
         }       
 
-    }
-    
+    }    
     
     takePicture(){
 
         let video = document.querySelector('.cam-modal video');
         
-        navigator.mediaDevices.getUserMedia({video/*:{            
+        navigator.mediaDevices.getUserMedia({video:{            
             
             facingMode: {
-                exact: 'environment'
+                //exact: 'environment'
               }
-            }*/
+            }
             
         })
         .then(stream => {
@@ -157,10 +168,13 @@ class ThingsInteraction extends Controller{
 
             
         if(!(document.querySelector('#take-picture-button') == null)){
-            document.querySelector('#take-picture-button').addEventListener('click', async () => {                
-                document.querySelector('div.background-modal').style.display = 'none';
-                // document.querySelector("#camera").style.display = "none";
-                document.querySelector('.background-modal .container').style.backgroundColor = 'rgba(0,0,0,0.3)';
+            document.querySelector('#take-picture-button').addEventListener('click', async () => { 
+                HelperTabOrder.resetTabOrder(tabOrderRegisterModalCamera);
+                HelperTabOrder.resetTabOrder(tabOrderRegisterModalTakePicture);
+                HelperTabOrder.setTabOrder(tabOrderInteraction);
+
+                document.querySelector('div.background-modal').style.display = 'none';                
+                document.querySelector('body').style.overflow = 'auto';  
 
                 let canvas = document.querySelector('canvas');            
                 
@@ -178,6 +192,7 @@ class ThingsInteraction extends Controller{
                     let blob = await response.blob();               
                     
                     this.takePictureBlob = blob;
+                    alert('Foto tirada com sucesso');
                                 
                 } catch(e) {
                     console.log(e);
@@ -223,6 +238,9 @@ class ThingsInteraction extends Controller{
     closeImageRegistrationModal(){
         document.querySelector('#exit-modal-button').addEventListener('click',()=>{
             document.querySelector('div.background-modal').style.display = 'none';
+
+            HelperTabOrder.resetTabOrder(tabOrderRegisterModalTakePicture);
+            HelperTabOrder.setTabOrder(tabOrderInteraction); 
         });
     
     }
@@ -233,7 +251,10 @@ class ThingsInteraction extends Controller{
             document.querySelector('div.background-modal').style.display = 'block';          
             document.querySelector('.cam-modal').style.display = 'flex';
             document.querySelector('#img-register-modal').style.display = 'none';
-            document.querySelector('.background-modal .container').style.backgroundColor = '#1c1b1f';
+            document.querySelector('body').style.overflow = 'hidden';
+
+            HelperTabOrder.resetTabOrder(tabOrderRegisterModalTakePicture);            
+            HelperTabOrder.setTabOrder(tabOrderRegisterModalCamera);
             
         });   
 
@@ -241,10 +262,11 @@ class ThingsInteraction extends Controller{
             document.querySelector('div.background-modal').style.display = 'block';
             document.querySelector('#img-register-modal').style.display = 'block';
             document.querySelector('.cam-modal').style.display = 'none';
-            //document.querySelector('#img-picture').removeAttribute('src');
-            //document.querySelector('#camera').style.display = 'block';
+
+            HelperTabOrder.resetTabOrder(tabOrderInteraction);
+            HelperTabOrder.setTabOrder(tabOrderRegisterModalTakePicture);
             
-        });        
+        });      
 
         
 
@@ -264,7 +286,7 @@ class ThingsInteraction extends Controller{
         values.push( {name:'Tela inicial', href:`${config.urlBase}/src/views/admin/panel/`}  );
         values.push( {name:'Gerenciar Objetos', href: `${config.urlBase}/src/views/admin/things/`}  );
         values.push( {name:'Objetos filtrados', href:`${config.urlBase}/src/views/admin/things/manager/?id=0`}  );
-        values.push( {name:'Editar objetos', href:'#'}  );       
+        values.push( {name:'Editar objetos', href:this.retrieveURLCurrentPage()}  );       
         
 
         layoutBreadcrumbs.create(ul, values);
@@ -279,14 +301,54 @@ class ThingsInteraction extends Controller{
         });
     }
 
+    appendFooter(){
+        let containerFooter = document.querySelector("footer .container");
+        const layoutFooter  = new LayoutFooter();
+        layoutFooter.create(containerFooter, config, true);        
+        
+    } 
+
+    sizeImgRegisterModal(){        
+        let sizeImgRegisterModal = document.querySelector('#img-register-modal');
+        
+        sizeImgRegisterModal.style.width = `${(window.innerWidth -40)}px`;
+        
+    }
+
+    canonicalKludge(){
+        let searchModal = document.querySelector("#search-modal");
+        let imgRegisterModal = document.querySelector("#img-register-modal");                   
+
+        searchModal !== null && (document.querySelector("#search-modal").style.display = 'none');
+        imgRegisterModal !== null && (document.querySelector("#img-register-modal").style.display = 'none');
+        document.querySelector(".background-modal").style.display = 'block';           
+        document.querySelector(".sandwich-menu-body").setAttribute("style","display:flex");
+        
+        let camModal = document.querySelector(".cam-modal");
+        (camModal !== null) && (camModal.setAttribute("style","display:none"));
+        document.querySelector("img[alt='Fechar menu']").dispatchEvent(new Event('click'))
+    }
+
+    setTabOrder(){                       
+        HelperTabOrder.setTabOrder(tabOrderInteraction);
+    }
+
+    setImgsRegisterModal(){
+        document.querySelector('#exit-modal-button').setAttribute('src',`${config.urlBase}/assets/imgs/icons/close_FILL0_wght300_GRAD0_opsz24.svg`);
+        document.querySelector('#open-picture-modal img').setAttribute('src',`${config.urlBase}/assets/imgs/icons/photo_camera_FILL0_wght300_GRAD0_opsz24.svg`);
+        document.querySelector("label[for='image-address'] img").setAttribute('src',`${config.urlBase}/assets/imgs/icons/filter_FILL0_wght300_GRAD0_opsz24.svg`);
+    }
+    
+
 }
 
 const thingsInteraction = new ThingsInteraction();
 thingsInteraction.createHeaderContent();
 thingsInteraction.createBreadcrumbs();
-thingsInteraction.getThing();
-thingsInteraction.update();
-thingsInteraction.return();
+await thingsInteraction.getThing();
+
+await thingsInteraction.update();
+await thingsInteraction.return();
 thingsInteraction.enableButton("img-picture","image-address","image-address-update", "local", "list-categories", "description");
 thingsInteraction.inputFileImageUploadPreview();
 thingsInteraction.takePicture();
@@ -294,11 +356,17 @@ thingsInteraction.inputFileImageUploadPreview();
 thingsInteraction.closeImageRegistrationModal();
 thingsInteraction.openImageRegistrationModal();
 thingsInteraction.arrowBack();
+thingsInteraction.appendFooter();
+thingsInteraction.sizeImgRegisterModal();
+thingsInteraction.setTabOrder();
+thingsInteraction.setImgsRegisterModal();
 
 HelperSandwichMenu.createSandwichMenu();
 HelperSandwichMenu.goToProfile();
 HelperSandwichMenu.goToDiscardeThings();
 HelperSandwichMenu.goToCategoryManager();
 HelperSandwichMenu.openSandwichMenu();
-HelperSandwichMenu.closeSandwichMenu();
-// HelperSandwichMenu.goToReturnedThings();
+HelperSandwichMenu.closeSandwichMenu('interaction');
+
+thingsInteraction.canonicalKludge();
+

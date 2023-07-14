@@ -5,8 +5,13 @@ import HelperSandwichMenu from '../../../helpers/sandwichmenu/index.js';
 
 import LayoutHeaderContent from '../../../components/headercontent/index.js';
 import LayoutBreadcrumbs from '../../../components/breadcrumbs/index.js';
+import LayoutFooter from '../../../components/footer/index.js';
 
 import config from '../../../../../config.js';
+
+import HelperTabOrder from '../../../helpers/taborder/index.js';
+
+import tabOrderCategoriesRegister from "./taborder/index.js";
 
 class CategoriesRegistration extends Controller{
 
@@ -25,7 +30,8 @@ class CategoriesRegistration extends Controller{
                 
             }             
                          
-            this.modelCategories.insert(this.prevPage, formData);           
+            this.modelCategories.insert(this.prevPage, formData);          
+            
         
        });
     }
@@ -67,7 +73,7 @@ class CategoriesRegistration extends Controller{
         
         values.push( {name:'Tela inicial', href:`${config.urlBase}/src/views/admin/panel/`}  );
         values.push( {name:'Editar categorias', href:`${config.urlBase}/src/views/admin/categories/`}  );
-        values.push( {name:'Cadastrar categorias', href:'#'}  );
+        values.push( {name:'Cadastrar categorias', href:this.retrieveURLCurrentPage()}  );
         
         layoutBreadcrumbs.create(ul, values);        
 
@@ -81,6 +87,17 @@ class CategoriesRegistration extends Controller{
             
         });
     }
+
+    appendFooter(){
+        let containerFooter = document.querySelector("footer .container");
+        const layoutFooter  = new LayoutFooter();
+        layoutFooter.create(containerFooter, config, true);        
+        
+    } 
+
+    setTabOrder(){                       
+        HelperTabOrder.setTabOrder(tabOrderCategoriesRegister);
+    }
     
 
 }
@@ -91,10 +108,12 @@ categoriesRegistration.createBreadcrumbs();
 categoriesRegistration.save();
 categoriesRegistration.focusNameField();
 categoriesRegistration.arrowBack();
+categoriesRegistration.appendFooter();
+categoriesRegistration.setTabOrder();
 
 HelperSandwichMenu.createSandwichMenu();
 HelperSandwichMenu.goToProfile();
 HelperSandwichMenu.goToDiscardeThings();
 HelperSandwichMenu.goToCategoryManager();
 HelperSandwichMenu.openSandwichMenu();
-HelperSandwichMenu.closeSandwichMenu();
+HelperSandwichMenu.closeSandwichMenu('categoriesregister');

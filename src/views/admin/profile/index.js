@@ -6,6 +6,12 @@ import HelperSandwichMenu from '../../helpers/sandwichmenu/index.js';
 
 import LayoutHeaderContent from '../../components/headercontent/index.js';
 import LayoutBreadcrumbs from '../../components/breadcrumbs/index.js';
+import LayoutFooter from '../../components/footer/index.js';
+
+import HelperTabOrder from '../../helpers/taborder/index.js';
+
+import tabOrderProfile from "./taborder/index.js";
+
 
 class Profile extends Controller{    
 
@@ -22,8 +28,8 @@ class Profile extends Controller{
         let email = document.querySelector("#email").value;
         let password = document.querySelector("#password").value;        
         
-        if(document.querySelector("#email").getAttribute('disabled') === null
-            || document.querySelector("#password").getAttribute('disabled') === null
+        if(document.querySelector("#email").getAttribute('clicked') === 'yes'
+            || document.querySelector("#password").getAttribute('clicked') === 'yes'
         ){
            
             if(email === '')  {   
@@ -46,14 +52,16 @@ class Profile extends Controller{
     }    
     
     enableFileds(){
-        document.querySelector(".span-email").addEventListener('click',function(e){  
+        document.querySelector("#email").addEventListener('click',function(e){  
                     
-            document.querySelector("#email").removeAttribute('disabled');
+            document.querySelector("#email").setAttribute('clicked', 'yes');
+            
         });
 
-        document.querySelector(".span-password").addEventListener('click', function(e){
+        document.querySelector("#password").addEventListener('click', function(e){
             
-            document.querySelector("#password").removeAttribute('disabled');
+            document.querySelector("#password").setAttribute('clicked', 'yes');
+            
         });
     }
 
@@ -96,7 +104,7 @@ class Profile extends Controller{
         const values = [];
         
         values.push( {name:'Tela inicial', href:`${config.urlBase}/src/views/admin/panel/`}  );
-        values.push( {name:'Perfil', href:'#'}  );
+        values.push( {name:'Perfil', href:this.retrieveURLCurrentPage()}  );
         
         layoutBreadcrumbs.create(ul, values);        
 
@@ -111,6 +119,21 @@ class Profile extends Controller{
         });
     }
 
+    appendFooter(){
+        let containerFooter = document.querySelector("footer .container");
+        const layoutFooter  = new LayoutFooter();
+        layoutFooter.create(containerFooter, config, true);        
+        
+    } 
+
+    setTabOrder(){                       
+        HelperTabOrder.setTabOrder(tabOrderProfile);
+    }
+
+    setImgProfile(){
+        document.querySelector('.profile-content-top img').setAttribute('src',`${config.urlBase}/assets/imgs/icons/account_circle_FILL1_wght300_GRAD0_opsz40.svg`);
+    }
+
 }
 
 const profile = new Profile();
@@ -120,12 +143,15 @@ profile.enableFileds();
 profile.setEmail();
 profile.exit();
 profile.arrowBack();
+profile.appendFooter();
+profile.setTabOrder();
+profile.setImgProfile();
 
 HelperSandwichMenu.createSandwichMenu();
 HelperSandwichMenu.goToProfile();
 HelperSandwichMenu.goToDiscardeThings();
 HelperSandwichMenu.goToCategoryManager();
 HelperSandwichMenu.openSandwichMenu();
-HelperSandwichMenu.closeSandwichMenu();
+HelperSandwichMenu.closeSandwichMenu('profile');
 // HelperSandwichMenu.goToReturnedThings();
 // HelperSandwichMenu.exit();
